@@ -1,0 +1,83 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One production deploy at a time; never cancel one that is already uploading.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # The "production" environment can require a manual approval (set in GitHub:
+    # Settings > Environments > production > Required reviewers). That approval is the "go live" click.
+    environment:
+      name: production
+      url: https://rj-toolkit.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Check the build output
+        run: test -f dist/index.html && test -d dist/assets
+
+      - name: Check the upload target is configured
+        env:
+          SERVER_DIR: ${{ vars.FTP_SERVER_DIR }}
+        run: |
+          if [ -z "$SERVER_DIR" ]; then
+            echo "Set the repository variable FTP_SERVER_DIR (for example public_html/)."
+            exit 1
+          fi
+
+      - name: Upload dist/ to Hostinger over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: dist/
+          server-dir: ${{ vars.FTP_SERVER_DIR }}
+          # Upload only what changed. Never delete remote files automatically.
+          dangerous-clean-slate: false
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Live smoke test on https://rj-toolkit.com
+        env:
+          BASE_URL: https://rj-toolkit.com
+        run: npx playwright test --grep @live --project=chromium
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-smoke-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

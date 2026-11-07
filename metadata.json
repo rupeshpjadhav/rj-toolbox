@@ -1,0 +1,5 @@
+{
+  "name": "Dev Toolbox",
+  "description": "A versatile web-based utility for developers, offering a collection of tools for data conversion, text manipulation, JSON handling, and difference checking, all within a clean, tab-based interface.",
+  "requestFramePermissions": []
+}
