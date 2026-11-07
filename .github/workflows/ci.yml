@@ -9,9 +9,11 @@ on:
 permissions:
   contents: read
 
+# Only pull requests cancel older runs. Push and reusable-call runs get their own group,
+# so the deploy workflow never cancels (or is cancelled by) a CI run on the same commit.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.event_name == 'pull_request' && format('ci-pr-{0}', github.ref) || format('ci-run-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   check:
