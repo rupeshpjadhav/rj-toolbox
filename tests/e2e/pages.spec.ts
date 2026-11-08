@@ -62,6 +62,7 @@ test('@live privacy policy has no analytics or unverified consent claims', async
 test('@live about page only links to LinkedIn for contact', async ({ page }) => {
   await page.goto('/about/');
   await expect(page.locator('main a[href*="linkedin.com"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="mailto:rupeshpjadhav@gmail.com"]')).toHaveCount(1);
   await expect(page.locator('main a[href*="youtube.com"]')).toHaveCount(0);
   await expect(page.locator('main a[href*="travel.rupeshjadhav.com"]')).toHaveCount(0);
 });
