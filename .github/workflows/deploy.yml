@@ -42,6 +42,10 @@ jobs:
         run: npm ci
 
       - name: Build production bundle
+        env:
+          VITE_ADSENSE_CLIENT: ${{ vars.VITE_ADSENSE_CLIENT }}
+          VITE_ADSENSE_SLOT_TOP: ${{ vars.VITE_ADSENSE_SLOT_TOP }}
+          VITE_ADSENSE_SLOT_BOTTOM: ${{ vars.VITE_ADSENSE_SLOT_BOTTOM }}
         run: npm run build
 
       - name: Check the build output

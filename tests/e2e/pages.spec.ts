@@ -15,14 +15,23 @@ for (const { path, heading } of PAGES) {
     expect(response?.status()).toBe(200);
     await expect(page.locator('h1')).toHaveText(heading);
     expect(await page.title()).not.toBe('My Toolbox - All-in-One Online Tools');
-    await expect(page.locator('footer a[href="/privacy-policy/"]')).toBeVisible();
+    await expect(page.locator('header a[href="/privacy-policy/"]')).toBeVisible();
   });
 }
 
-test('@live the home page links to every public page', async ({ page }) => {
+test('@live the home page header links to every public page', async ({ page }) => {
   await page.goto('/');
   for (const { path } of PAGES) {
-    await expect(page.locator(`footer a[href="${path}"]`).first()).toBeAttached();
+    await expect(page.locator(`header a[href="${path}"]`).first()).toBeVisible();
+  }
+});
+
+test('@live the home page reserves space for two ad slots', async ({ page }) => {
+  await page.goto('/');
+  for (const slot of ['top', 'bottom']) {
+    const box = await page.locator(`aside[data-ad-slot="${slot}"]`).boundingBox();
+    expect(box, `ad slot ${slot} exists`).not.toBeNull();
+    expect(box!.height).toBeGreaterThanOrEqual(90);
   }
 });
 
@@ -53,6 +62,14 @@ test('@live privacy policy has no analytics or unverified consent claims', async
 test('@live about page only links to LinkedIn for contact', async ({ page }) => {
   await page.goto('/about/');
   await expect(page.locator('main a[href*="linkedin.com"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="mailto:rupeshpjadhav@gmail.com"]')).toHaveCount(1);
   await expect(page.locator('main a[href*="youtube.com"]')).toHaveCount(0);
   await expect(page.locator('main a[href*="travel.rupeshjadhav.com"]')).toHaveCount(0);
+});
+
+test('@live contact page lists LinkedIn and email, without YouTube', async ({ page }) => {
+  await page.goto('/contact/');
+  await expect(page.locator('main a[href*="linkedin.com"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="mailto:rupeshpjadhav@gmail.com"]')).toHaveCount(1);
+  await expect(page.locator('main a[href*="youtube.com"]')).toHaveCount(0);
 });
