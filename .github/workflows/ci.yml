@@ -40,6 +40,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build and browser tests (desktop + Pixel 7)
+        env:
+          VITE_ADSENSE_CLIENT: ${{ vars.VITE_ADSENSE_CLIENT }}
+          VITE_ADSENSE_SLOT_TOP: ${{ vars.VITE_ADSENSE_SLOT_TOP }}
+          VITE_ADSENSE_SLOT_BOTTOM: ${{ vars.VITE_ADSENSE_SLOT_BOTTOM }}
         run: npm run test:e2e
 
       - name: Upload Playwright report on failure
