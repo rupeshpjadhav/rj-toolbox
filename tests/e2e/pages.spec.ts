@@ -81,3 +81,10 @@ test('@live AdSense verification: meta tag on the homepage and ads.txt are serve
   expect(ads.status()).toBe(200);
   expect(await ads.text()).toContain('google.com, pub-1981273968189802, DIRECT, f08c47fec0942fa0');
 });
+
+test('@live every page includes the AdSense Auto ads script', async ({ page }) => {
+  for (const path of ['/', '/about/', '/contact/', '/guides/', '/privacy-policy/', '/terms/']) {
+    await page.goto(path);
+    await expect(page.locator('script[src*="adsbygoogle.js?client=ca-pub-1981273968189802"]')).toHaveCount(1);
+  }
+});
