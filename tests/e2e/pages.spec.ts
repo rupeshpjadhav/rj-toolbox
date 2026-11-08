@@ -73,3 +73,11 @@ test('@live contact page lists LinkedIn and email, without YouTube', async ({ pa
   await expect(page.locator('main a[href="mailto:rupeshpjadhav@gmail.com"]')).toHaveCount(1);
   await expect(page.locator('main a[href*="youtube.com"]')).toHaveCount(0);
 });
+
+test('@live AdSense verification: meta tag on the homepage and ads.txt are served', async ({ page, request }) => {
+  await page.goto('/');
+  await expect(page.locator('meta[name="google-adsense-account"]')).toHaveAttribute('content', 'ca-pub-1981273968189802');
+  const ads = await request.get('/ads.txt');
+  expect(ads.status()).toBe(200);
+  expect(await ads.text()).toContain('google.com, pub-1981273968189802, DIRECT, f08c47fec0942fa0');
+});
