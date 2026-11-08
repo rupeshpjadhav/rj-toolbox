@@ -1,5 +1,7 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
+import { AdSlot } from './components/AdSlot';
+import { loadAdSense } from './lib/ads';
 const CaseConverter = lazy(() => import('./components/CaseConverter'));
 const DifferenceChecker = lazy(() => import('./components/DifferenceChecker'));
 const FormatConverter = lazy(() => import('./components/FormatConverter'));
@@ -108,11 +110,23 @@ const tools = [
   }
 ];
 
+const SITE_LINKS = [
+  { href: '/guides/', label: 'Tool guides' },
+  { href: '/about/', label: 'About' },
+  { href: '/privacy-policy/', label: 'Privacy policy' },
+  { href: '/terms/', label: 'Terms' },
+  { href: '/contact/', label: 'Contact' },
+];
+
 const App: React.FC = () => {
   const [activeTool, setActiveTool] = useState(tools[0].name);
 
   const activeToolObj = tools.find(tool => tool.name === activeTool);
   const ActiveToolComponent = activeToolObj?.component;
+
+  useEffect(() => {
+    loadAdSense();
+  }, []);
 
   return (
     <div className="bg-slate-900 text-white min-h-screen font-sans">
@@ -124,10 +138,15 @@ const App: React.FC = () => {
       </Helmet>
       <header className="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3 min-h-[4rem]">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-cyan-400">
               {activeToolObj?.seo?.title || 'Toolkit by Rupesh'}
             </h1>
+            <nav aria-label="Site" className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-300">
+              {SITE_LINKS.map(link => (
+                <a key={link.href} href={link.href} className="hover:text-cyan-400 hover:underline">{link.label}</a>
+              ))}
+            </nav>
           </div>
           <div className="text-center mt-2 text-slate-500 text-sm">
             <span>Created by <a href="https://www.linkedin.com/in/rupeshj/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">Rupesh Jadhav</a></span>
@@ -154,12 +173,14 @@ const App: React.FC = () => {
             ))}
           </nav>
         </div>
+        <AdSlot id="top" minHeight={90} />
         <div className="animate-fade-in">
           {/* Each tool is a separate chunk, loaded the first time it is opened */}
           <Suspense fallback={<div className="text-slate-400 py-12 text-center" role="status">Loading tool…</div>}>
             {ActiveToolComponent}
           </Suspense>
         </div>
+        <AdSlot id="bottom" minHeight={250} />
       </main>
       <footer className="text-center py-6 text-slate-500 text-sm">
         <p>Built with React, TypeScript, and TailwindCSS.<br />

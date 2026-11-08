@@ -15,14 +15,23 @@ for (const { path, heading } of PAGES) {
     expect(response?.status()).toBe(200);
     await expect(page.locator('h1')).toHaveText(heading);
     expect(await page.title()).not.toBe('My Toolbox - All-in-One Online Tools');
-    await expect(page.locator('footer a[href="/privacy-policy/"]')).toBeVisible();
+    await expect(page.locator('header a[href="/privacy-policy/"]')).toBeVisible();
   });
 }
 
-test('@live the home page links to every public page', async ({ page }) => {
+test('@live the home page header links to every public page', async ({ page }) => {
   await page.goto('/');
   for (const { path } of PAGES) {
-    await expect(page.locator(`footer a[href="${path}"]`).first()).toBeAttached();
+    await expect(page.locator(`header a[href="${path}"]`).first()).toBeVisible();
+  }
+});
+
+test('@live the home page reserves space for two ad slots', async ({ page }) => {
+  await page.goto('/');
+  for (const slot of ['top', 'bottom']) {
+    const box = await page.locator(`aside[data-ad-slot="${slot}"]`).boundingBox();
+    expect(box, `ad slot ${slot} exists`).not.toBeNull();
+    expect(box!.height).toBeGreaterThanOrEqual(90);
   }
 });
 
