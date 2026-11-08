@@ -2,50 +2,42 @@
 
 Live site: https://rj-toolkit.com (Hostinger shared hosting, account `u315516985`).
 
-## How it works today
+## How it works
 
-- The site is static. `npm run build` writes `dist/`, and the server only has to serve those files.
-- Hostinger holds the site in `/home/u315516985/domains/rj-toolkit.com/public_html`.
-- It was uploaded by hand from `dist/`. It is not connected to Git, so nothing deploys automatically.
-- Leftover on the server: `default.php.orig`. Old asset files also stay after each upload. Both are harmless.
+1. You push a change to `main` (directly or through a pull request).
+2. CI runs the typecheck, unit tests and browser tests.
+3. The deploy job waits for your approval in the `production` environment.
+4. After approval, the job builds the site and pushes the built files to the `deploy` branch. The branch holds only `index.html`, `favicon.svg`, `assets/` and `sitemap.xml`.
+5. Hostinger's Git auto-deployment publishes the `deploy` branch to `public_html`, the web root.
+6. The job waits until the live site serves the new build, then runs the live smoke tests.
 
-## The pipeline
-
-```
-git push to main
-   -> CI: typecheck, unit tests, build, browser tests (desktop + Pixel 7)
-   -> deploy job waits for your approval (GitHub "production" environment)
-   -> upload dist/ to Hostinger over FTPS
-   -> live smoke test against https://rj-toolkit.com
-```
-
-Pull requests run only the CI job. Nothing deploys from a branch other than `main`.
+Source code stays on `main`. Never commit source code to `deploy`. Each deploy overwrites the `deploy` branch with a fresh build.
 
 Workflows: [.github/workflows/ci.yml](.github/workflows/ci.yml), [.github/workflows/deploy.yml](.github/workflows/deploy.yml).
 
-## Daily workflow
+## Making a change
 
-1. Make the change on a branch and run `npm run check` (typecheck, unit tests, build, browser tests).
+1. Create a branch, make the change, and run `npm run check` (typecheck, unit tests, build, browser tests).
 2. Open a pull request. CI must pass before you merge.
 3. Merge to `main`. The deploy job starts and waits.
-4. Approve the `production` deployment in GitHub Actions. That is the "go live" step.
-5. The live smoke test runs. If it fails, the site is already updated, so roll back (below).
+4. Approve the `production` deployment in the Actions tab. This is the "go live" step.
+5. Wait for the run to finish. The live smoke test runs last.
 
-## One-time setup
+## Hostinger settings (already configured)
 
-1. **Put the project in Git.** The folder is not a repo yet. Run `git init`, commit, and push to a new GitHub repository. Confirm that `.gitignore` excludes `node_modules/`, `dist/` and the test output folders.
-2. **Get the FTP details from hPanel.** Open Files > FTP Accounts and note the server, username and password. Use FTPS if Hostinger offers it.
-3. **Add repository secrets** (Settings > Secrets and variables > Actions):
-   - `FTP_SERVER`: the FTP host from hPanel
-   - `FTP_USERNAME`
-   - `FTP_PASSWORD`
-4. **Add the repository variable** `FTP_SERVER_DIR`. Upload a test file once to see where the FTP login lands, then set this to the folder that holds `index.html` on the live site (usually `public_html/`). The deploy stops with an error if this is empty.
-5. **Create the `production` environment** (Settings > Environments > New environment). Add yourself under Required reviewers. This is what makes the deploy wait for approval.
-6. **Protect `main`** (Settings > Branches). Require the CI check to pass before merging.
+Websites > rj-toolkit.com > Advanced > Git:
+- Repository: `rupeshpjadhav/rj-toolbox`
+- Branch: `deploy`
+- Root directory: `public_html`
+- Auto-deployment: on
+
+If auto-deployment ever shows as off, the site will not update after the deploy job pushes. Turn it back on.
 
 ## Rollback
 
-Revert the bad commit on `main` and push. The pipeline runs the tests and redeploys the previous version. The upload only overwrites changed files, so the rollback takes about a minute.
+Revert the bad commit on `main`, merge the revert, and approve the deploy. The deploy job rebuilds the previous version and pushes it to `deploy`.
+
+For an urgent rollback, you can open the `deploy` branch on GitHub, find the previous "Deploy build" commit, and use **Redeploy** in hPanel's Git section after setting the branch. Ask for help before doing this, since it is easy to get wrong.
 
 ## Running the live tests yourself
 
@@ -54,12 +46,16 @@ BASE_URL=https://rj-toolkit.com npx playwright test --grep @live     # macOS / L
 $env:BASE_URL="https://rj-toolkit.com"; npx playwright test --grep @live   # PowerShell
 ```
 
+## Retired: FTP deploy
+
+Earlier deploys used FTPS to upload `dist/` into `public_html`. That did not reach the web root, so it has been replaced by the Git flow above. The `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` and `FTP_SERVER_DIR` secrets and variables are no longer used and can be deleted in GitHub (Settings > Secrets and variables > Actions).
+
 ## What the tests cover
 
-- `tests/unit/`: the shared logic in `lib/` (case conversion, the safe JS literal parser, secure random, SQL minify, CSV/TSV column checks, Python output, HTML escaping, JS syntax errors). Each bug fixed in the code review has a regression test.
-- `tests/e2e/smoke.spec.ts`: every tool opens with no console errors, plus a happy path for the YAML validator, Case converter, JS validator, CSV converter and Python output. Tests tagged `@live` also run against the live site.
+- `tests/unit/`: the shared logic in `lib/`, including the Data Converter for all Column/CSV/TSV/JSON/XML pairs.
+- `tests/e2e/smoke.spec.ts`: every tool opens without console errors, the Data Converter runs all 25 input/output pairs, and a few happy paths. Tests tagged `@live` also run against the live site.
 
 ## Not covered yet
 
-- **There is no backend.** The API in `TEST_PLAN.md` section 5 does not exist, so there is nothing to test there. When it is built, add an API test job next to the browser tests.
+- There is no backend, so there are no API tests. Add an API job when one exists.
 - Visual (screenshot) and accessibility checks are not wired in yet.
