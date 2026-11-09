@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",
+    "@tailwindcss/vite": "^4.1.14",
     "@types/d3-dsv": "^3.0.7",
     "@types/diff": "^7.0.2",
     "@types/node": "^22.14.0",

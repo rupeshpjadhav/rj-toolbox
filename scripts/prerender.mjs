@@ -125,6 +125,7 @@ const homeGuide = () => `<section aria-labelledby="all-tools" class="${container
 
 const siteFooter = () => `<footer class="border-t border-slate-800 text-center py-6 text-slate-500 text-sm">
       <p>© ${new Date().getFullYear()} Rupesh Jadhav · My Toolbox (rj-toolkit.com) · Created by <a href="https://www.linkedin.com/in/rupeshj/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Rupesh Jadhav</a></p>
+      <p class="mt-1">Built with React, TypeScript, Vite and Tailwind CSS.</p>
       <p class="mt-2">${SITE_LINKS.map(([href, label]) => `<a href="${href}" class="hover:text-cyan-400 hover:underline">${label}</a>`).join(' · ')}</p>
     </footer>`;
 
