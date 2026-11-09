@@ -7,7 +7,7 @@ Live site: https://rj-toolkit.com (Hostinger shared hosting, account `u315516985
 1. You push a change to `main` (directly or through a pull request).
 2. CI runs the typecheck, unit tests and browser tests.
 3. The deploy job waits for your approval in the `production` environment.
-4. After approval, the job builds the site and pushes the built files to the `deploy` branch. The branch holds only `index.html`, `favicon.svg`, `assets/` and `sitemap.xml`.
+4. After approval, the job builds the site and pushes the built files to the `deploy` branch. The branch holds only the built site: `index.html`, one folder per tool page (for example `json-formatter/index.html`), the static pages, `assets/`, `sitemap.xml`, `404.html`, `og-image.png` and `.htaccess`.
 5. Hostinger's Git auto-deployment publishes the `deploy` branch to `public_html`, the web root.
 6. The job waits until the live site serves the new build, then runs the live smoke tests.
 
@@ -22,6 +22,14 @@ Workflows: [.github/workflows/ci.yml](.github/workflows/ci.yml), [.github/workfl
 3. Merge to `main`. The deploy job starts and waits.
 4. Approve the `production` deployment in the Actions tab. This is the "go live" step.
 5. Wait for the run to finish. The live smoke test runs last.
+
+## SEO pages
+
+`npm run build` runs `vite build` and then `scripts/prerender.mjs`, which writes one static page per tool
+from `lib/toolPages.json` (title, description, H1, how-to, FAQ, structured data) plus `sitemap.xml` and
+`404.html`. To change a tool's page text, edit `lib/toolPages.json`. To add a tool, add it there and in
+`TOOL_COMPONENTS` in `App.tsx`. `public/.htaccess` redirects `www.` and `http://` to `https://rj-toolkit.com`
+and sets caching.
 
 ## Hostinger settings (already configured)
 

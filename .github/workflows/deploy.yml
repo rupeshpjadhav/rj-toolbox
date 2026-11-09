@@ -49,7 +49,7 @@ jobs:
         run: npm run build
 
       - name: Check the build output
-        run: test -f dist/index.html && test -f dist/favicon.svg && test -d dist/assets && test -f dist/sitemap.xml
+        run: test -f dist/index.html && test -f dist/favicon.svg && test -d dist/assets && test -f dist/sitemap.xml && test -f dist/.htaccess && test -f dist/404.html && test -f dist/og-image.png && test -f dist/json-formatter/index.html
 
       - name: Publish the build to the deploy branch
         run: |

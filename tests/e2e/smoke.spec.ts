@@ -25,18 +25,23 @@ const collectErrors = (page: Page) => {
   return errors;
 };
 
-// Select a tool by its nav button (exact text, so "Data Converter" does not match other buttons).
+// Open a tool from the tool menu. Each tool has its own page (e.g. /json-formatter/), so this
+// navigates. The heading is checked inside #root so the static guide text below the app
+// (which also mentions the tool name) cannot make the check pass on its own.
 const openTool = async (page: Page, name: string) => {
-  await page.getByRole('button', { name, exact: true }).click();
-  await expect(page.locator('h2', { hasText: name }).first()).toBeVisible();
+  await page.getByRole('navigation', { name: 'Tools' }).getByRole('link', { name, exact: true }).click();
+  await expect(page.locator('#root h2', { hasText: name }).first()).toBeVisible();
 };
 
-test('@live home page loads with a title and all tool tabs', async ({ page }) => {
+test('@live home page loads with its heading and the full tool menu', async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('Test Data Generator');
+  await expect(page.locator('h1')).toHaveText('Free online developer and QA tools');
+  // The home page still opens the first tool, so visitors can start straight away.
+  await expect(page.locator('#root h2', { hasText: 'Test Data Generator' })).toBeVisible();
+  const toolMenu = page.getByRole('navigation', { name: 'Tools' });
   for (const name of TOOLS) {
-    await expect(page.getByRole('button', { name, exact: true })).toBeVisible();
+    await expect(toolMenu.getByRole('link', { name, exact: true })).toBeVisible();
   }
   expect(errors).toEqual([]);
 });
