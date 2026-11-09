@@ -24,6 +24,8 @@ let scriptRequested = false;
 export const loadAdSense = (): void => {
   if (!AD_CLIENT || scriptRequested || typeof document === 'undefined') return;
   scriptRequested = true;
+  // index.html already includes the Auto ads script; loading it twice causes AdSense errors.
+  if (document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) return;
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(AD_CLIENT)}`;

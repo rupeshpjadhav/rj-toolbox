@@ -1,0 +1,358 @@
+{
+  "home": {
+    "title": "Free Online Developer & QA Tools | My Toolbox",
+    "description": "Free online tools for developers and testers: test data generator, password generator, CSV to JSON converter, JSON, SQL and YAML formatters and a diff checker.",
+    "h1": "Free online developer and QA tools",
+    "lead": "Ten everyday utilities for developers, testers and anyone who works with data. Everything runs in your browser, so your data stays on your device."
+  },
+  "tools": [
+    {
+      "slug": "test-data-generator",
+      "name": "Test Data Generator",
+      "title": "Test Data Generator – Fake JSON, CSV & SQL Data | My Toolbox",
+      "description": "Generate realistic fake test data online: names, emails, phones, UUIDs and more. Export as JSON, CSV, XML, HTML, SQL inserts, Python or JavaScript. Free.",
+      "h1": "Test Data Generator",
+      "lead": "Create realistic fake records for testing, demos and database seeding, then export them as JSON, CSV, XML, HTML, SQL inserts, Python or JavaScript.",
+      "steps": [
+        "Add the columns you need and pick a data type for each one, such as full name, email, phone number, city or UUID.",
+        "Enter how many rows to generate.",
+        "Choose the output format: JSON, CSV, XML, HTML, SQL, Python or JavaScript.",
+        "Click Generate Data, then copy the result or download it as a file."
+      ],
+      "faqs": [
+        {
+          "q": "Is the generated data real?",
+          "aHtml": "No. Every value is randomly generated fake data, so you can use it in test and demo environments without exposing real people’s details."
+        },
+        {
+          "q": "Can I create SQL INSERT statements?",
+          "aHtml": "Yes. Choose SQL as the output format to get INSERT statements you can run against a local or staging database."
+        },
+        {
+          "q": "Is my data sent to a server?",
+          "aHtml": "No. The data is generated in your browser and is not uploaded or stored."
+        }
+      ],
+      "aboutHtml": "Builds realistic fake records for testing: you define columns (row number, UUID, full/first/last name, email, phone number, city, country, random numbers, random words), pick how many rows you want, and export as JSON, CSV, XML, HTML, SQL inserts, Python or JavaScript.",
+      "goodForHtml": [
+        "Seeding a local or staging database with believable users",
+        "Load and performance tests that need thousands of unique rows",
+        "Demo screens and screenshots without exposing real customer data",
+        "Unit-test fixtures in the exact language format you need"
+      ],
+      "tipHtml": "Use synthetic data instead of copying production records. It keeps personal data out of test environments, which most privacy rules (including India's DPDP Act and the GDPR) expect."
+    },
+    {
+      "slug": "password-generator",
+      "name": "Random Generator",
+      "title": "Password Generator – Strong Random Passwords | My Toolbox",
+      "description": "Free strong password generator. Choose length and character sets, skip look-alike characters, and create random API keys, WPA keys and MAC addresses.",
+      "h1": "Random Password and Key Generator",
+      "lead": "Generate strong random passwords and keys with your choice of length and character sets, using your browser’s cryptographically secure random number generator.",
+      "steps": [
+        "Set the password length.",
+        "Choose the character sets to include: uppercase, lowercase, numbers and symbols.",
+        "Decide whether to allow look-alike characters such as 1, l, I, 0 and O.",
+        "Click Generate Password and copy the result. Use the key generator tab for API keys, WPA keys or MAC addresses."
+      ],
+      "faqs": [
+        {
+          "q": "Are these passwords secure?",
+          "aHtml": "They are generated with the Web Crypto API (crypto.getRandomValues), the browser’s cryptographically secure random source, and each password includes at least one character from every set you choose."
+        },
+        {
+          "q": "How long should a password be?",
+          "aHtml": "At least 16 characters for important accounts. Length adds more strength than extra symbols."
+        },
+        {
+          "q": "Do you store the passwords?",
+          "aHtml": "No. Passwords are created in your browser and never sent to a server."
+        }
+      ],
+      "aboutHtml": "Creates strong passwords with a chosen length and character sets (uppercase, lowercase, numbers, symbols, with an option to drop look-alike characters such as 1, l, I and 0), plus random keys for development use.",
+      "goodForHtml": [
+        "A fresh password for a new account",
+        "API secrets and tokens for local development",
+        "Random identifiers for test environments"
+      ],
+      "tipHtml": "Length beats complexity: a 16+ character password with mixed sets is far harder to guess than a short one full of symbols. Store passwords in a password manager, not in a text file."
+    },
+    {
+      "slug": "csv-json-converter",
+      "name": "Data Converter",
+      "title": "CSV to JSON Converter – CSV, TSV, JSON & XML | My Toolbox",
+      "description": "Convert CSV to JSON, JSON to CSV, TSV, XML or a single column of values, in any direction. Auto-detects the input format, supports file upload. Free.",
+      "h1": "CSV, TSV, JSON and XML Converter",
+      "lead": "Convert data between CSV, TSV, JSON, XML and a single column of values in any direction, with automatic format detection and file upload.",
+      "steps": [
+        "Paste your data or upload a .csv, .tsv, .json or .txt file.",
+        "Leave auto-detect on, or choose the input format yourself.",
+        "Pick the output format and, for CSV or TSV, the quote style.",
+        "Click Convert, then copy the result or download it."
+      ],
+      "faqs": [
+        {
+          "q": "How do I convert CSV to JSON?",
+          "aHtml": "Paste the CSV with its header row, choose JSON as the output format and click Convert. Each row becomes a JSON object keyed by the header names."
+        },
+        {
+          "q": "Can it convert JSON back to CSV?",
+          "aHtml": "Yes. Choose JSON as the input and CSV as the output. The JSON should be an array of objects with the same keys."
+        },
+        {
+          "q": "What happens to commas inside values?",
+          "aHtml": "Quoted values such as \"Doe, John\" are read as one field, and values that need it are quoted again in CSV output."
+        }
+      ],
+      "aboutHtml": "Converts between Column (one value per line), CSV, TSV, JSON and XML, in any direction. It can auto-detect the input format, accepts a file upload, and lets you choose the quote style of CSV and TSV output.",
+      "goodForHtml": [
+        "Turning a spreadsheet export (CSV) into JSON for an API or mock server",
+        "Pasting a column of values from Excel and getting a JSON array",
+        "Converting JSON API responses back into CSV for analysis",
+        "Converting an XML export into JSON, or a JSON payload into XML"
+      ],
+      "tipHtml": "When a CSV has commas inside values, make sure those values are quoted; otherwise the columns shift. In XML, repeated elements such as &lt;item&gt; become rows. Check the first few converted rows before using the output."
+    },
+    {
+      "slug": "javascript-minifier",
+      "name": "JavaScript Toolkit",
+      "title": "JavaScript Minifier & Validator Online | My Toolbox",
+      "description": "Minify JavaScript online with Terser, choose the ECMAScript target, and validate code for syntax errors with line numbers. Free, runs in your browser.",
+      "h1": "JavaScript Minifier and Validator",
+      "lead": "Compress JavaScript with Terser for a smaller file, or validate code and see syntax errors with their line numbers.",
+      "steps": [
+        "Paste your JavaScript or upload a .js file.",
+        "Choose the ECMAScript version to target, from ES5 to the latest.",
+        "Click Compress to minify the code, or switch to Validate to check it for syntax errors.",
+        "Copy or download the minified output."
+      ],
+      "faqs": [
+        {
+          "q": "What does minifying JavaScript do?",
+          "aHtml": "It removes whitespace and comments and shortens code so the file downloads faster, without changing what the code does."
+        },
+        {
+          "q": "Does validation run my code?",
+          "aHtml": "No. The validator only parses the code to find syntax errors; it never executes it."
+        },
+        {
+          "q": "Should I edit the minified file?",
+          "aHtml": "No. Keep the readable source in version control and treat the minified output as a build artifact."
+        }
+      ],
+      "aboutHtml": "Compresses (minifies) JavaScript, with optional variable-name mangling and compression passes, and validates code for syntax errors and likely problems.",
+      "goodForHtml": [
+        "Shrinking a small script before embedding it in a page",
+        "Checking a snippet for syntax errors before deploying",
+        "Quick experiments without setting up a build tool"
+      ],
+      "tipHtml": "Keep the original readable file in version control and treat the minified output as a build artifact. Mangling names can break code that relies on function or variable names at runtime."
+    },
+    {
+      "slug": "json-formatter",
+      "name": "JSON Toolkit",
+      "title": "JSON Formatter & Validator Online | My Toolbox",
+      "description": "Format, beautify and validate JSON online. Find the line of a JSON error, choose 2, 4 or 8 space indents, and convert JavaScript objects to strict JSON. Free.",
+      "h1": "JSON Formatter and Validator",
+      "lead": "Beautify and validate JSON, find the exact line of an error, and convert JavaScript object literals into strict JSON.",
+      "steps": [
+        "Paste JSON or upload a .json file. It is validated as you type.",
+        "Choose an indent of 2, 4 or 8 spaces and click Beautify.",
+        "To turn a JavaScript object with unquoted keys or single quotes into strict JSON, use Stringify.",
+        "Copy or download the formatted JSON."
+      ],
+      "faqs": [
+        {
+          "q": "Why is my JSON invalid?",
+          "aHtml": "The most common causes are trailing commas, single quotes instead of double quotes, and unquoted keys. The error message shows where parsing failed."
+        },
+        {
+          "q": "Can it convert a JavaScript object to JSON?",
+          "aHtml": "Yes. Paste an object literal such as {name: 'Ana', tags: [1, 2,]} and click Stringify. The input is parsed as data and never executed."
+        },
+        {
+          "q": "Is my JSON uploaded anywhere?",
+          "aHtml": "No. Formatting and validation happen in your browser."
+        }
+      ],
+      "aboutHtml": "Formats, validates and beautifies JSON. It also accepts JavaScript object notation (unquoted keys), can stringify the result, and lets you choose 2, 4 or 8 spaces of indentation.",
+      "goodForHtml": [
+        "Making a minified API response readable",
+        "Finding the exact spot where invalid JSON breaks",
+        "Converting a JavaScript object literal into strict JSON"
+      ],
+      "tipHtml": "The most common JSON errors are trailing commas, single quotes instead of double quotes, and unquoted keys. The validator points to the line so you can fix it quickly."
+    },
+    {
+      "slug": "sql-formatter",
+      "name": "SQL Formatter",
+      "title": "SQL Formatter & Beautifier – MySQL, PostgreSQL | My Toolbox",
+      "description": "Format, beautify or minify SQL online for Standard SQL, MySQL, PostgreSQL and T-SQL. Set keyword case and indentation, and catch syntax errors. Free.",
+      "h1": "SQL Formatter and Beautifier",
+      "lead": "Make SQL queries readable or minify them to one line, for Standard SQL, MySQL, PostgreSQL and Transact-SQL.",
+      "steps": [
+        "Paste your SQL query.",
+        "Choose the dialect: Standard SQL, MySQL, PostgreSQL or Transact-SQL.",
+        "Pick UPPERCASE or lowercase keywords and an indent of 2 or 4 spaces.",
+        "Click Format to beautify, or Minify to put the query on one line, then copy the result."
+      ],
+      "faqs": [
+        {
+          "q": "Which SQL dialects are supported?",
+          "aHtml": "Standard SQL, MySQL, PostgreSQL and Transact-SQL (SQL Server)."
+        },
+        {
+          "q": "Does minifying change my string values?",
+          "aHtml": "No. Text inside quotes is kept exactly as written, and -- comments are turned into /* */ comments so they cannot hide the rest of the query."
+        },
+        {
+          "q": "Does it run the query?",
+          "aHtml": "No. It only formats the text; nothing is sent to a database."
+        }
+      ],
+      "aboutHtml": "Beautifies or minifies SQL queries and highlights syntax errors. It supports Standard SQL, MySQL, PostgreSQL and Transact-SQL (T-SQL), and can set keyword case (for example UPPERCASE).",
+      "goodForHtml": [
+        "Reading a long one-line query copied from logs",
+        "Standardizing query style before a code review",
+        "Spotting a missing comma or bracket"
+      ],
+      "tipHtml": "Pick the dialect that matches your database; functions and quoting rules differ between MySQL, PostgreSQL and SQL Server."
+    },
+    {
+      "slug": "diff-checker",
+      "name": "Difference Checker",
+      "title": "Diff Checker – Compare Text Online | My Toolbox",
+      "description": "Compare two texts or files online and see the differences line by line, with added lines in green and removed lines in red. Free, runs in your browser.",
+      "h1": "Diff Checker: Compare Two Texts",
+      "lead": "Compare two blocks of text or two files and see what changed, line by line.",
+      "steps": [
+        "Paste the original text on the left, or upload a file.",
+        "Paste the changed text on the right, or upload the second file.",
+        "Read the comparison below: added lines are green with a +, removed lines are red with a −."
+      ],
+      "faqs": [
+        {
+          "q": "Can I compare two files?",
+          "aHtml": "Yes. Use Upload File above each box to load a text file into it."
+        },
+        {
+          "q": "Why does the diff show changes I did not make?",
+          "aHtml": "Different whitespace or formatting counts as a change. Format both inputs the same way first, for example by beautifying both JSON files."
+        },
+        {
+          "q": "Are my files uploaded?",
+          "aHtml": "No. Files are read and compared in your browser."
+        }
+      ],
+      "aboutHtml": "Compares two blocks of text, or two uploaded files, and shows the changes line by line: added lines in green and removed lines in red.",
+      "goodForHtml": [
+        "Comparing two versions of a config file",
+        "Checking what changed between two API responses",
+        "Reviewing edits to a document or script"
+      ],
+      "tipHtml": "Format both inputs the same way first (for example, beautify both JSON files) so the diff shows real changes instead of whitespace noise."
+    },
+    {
+      "slug": "case-converter",
+      "name": "Case Converter",
+      "title": "Case Converter – UPPER, lower & Title Case | My Toolbox",
+      "description": "Convert text to UPPERCASE, lowercase or Title Case online in one click, then copy the result. Free and instant, runs in your browser.",
+      "h1": "Case Converter",
+      "lead": "Change text to UPPERCASE, lowercase or Title Case in one click.",
+      "steps": [
+        "Type or paste your text into the input box.",
+        "Click lowercase, UPPERCASE or Title Case.",
+        "Copy the converted text from the output box."
+      ],
+      "faqs": [
+        {
+          "q": "What is Title Case?",
+          "aHtml": "Title Case capitalizes the first letter of every word, for example “The Quick Brown Fox”."
+        },
+        {
+          "q": "How do I fix text typed with Caps Lock on?",
+          "aHtml": "Paste it in and click lowercase, or Title Case for names and headings."
+        },
+        {
+          "q": "Need camelCase or snake_case?",
+          "aHtml": "Use the <a href=\"/camel-case-converter/\">camelCase and snake_case converter</a>."
+        }
+      ],
+      "aboutHtml": "Changes text to lowercase, UPPERCASE or Title Case, with the result in a separate output box.",
+      "goodForHtml": [
+        "Fixing text typed with Caps Lock on",
+        "Making headings consistent",
+        "Normalizing lists of names or tags"
+      ],
+      "tipHtml": "Title Case capitalizes every word; style guides differ on short words like 'of' and 'and', so review headlines before publishing."
+    },
+    {
+      "slug": "camel-case-converter",
+      "name": "Text Styler",
+      "title": "camelCase, snake_case & kebab-case Converter | My Toolbox",
+      "description": "Convert text to camelCase, PascalCase, snake_case, kebab-case or Capitalized Case instantly for variable, function, file and URL names. Free.",
+      "h1": "camelCase, PascalCase, snake_case and kebab-case Converter",
+      "lead": "Turn any phrase into programming naming styles as you type: camelCase, PascalCase, snake_case, kebab-case and Capitalized Case.",
+      "steps": [
+        "Type or paste a phrase, such as “user account id”.",
+        "All five styles update as you type.",
+        "Click a result to select it, then copy it."
+      ],
+      "faqs": [
+        {
+          "q": "What is the difference between camelCase and PascalCase?",
+          "aHtml": "camelCase starts with a lowercase letter (userAccountId); PascalCase capitalizes every word (UserAccountId)."
+        },
+        {
+          "q": "When should I use snake_case or kebab-case?",
+          "aHtml": "snake_case is common for Python names and database columns; kebab-case is used for URLs, CSS classes and file names."
+        },
+        {
+          "q": "Does it handle existing camelCase or acronyms?",
+          "aHtml": "Yes. Input such as XMLHttpRequest userID becomes xml_http_request_user_id."
+        }
+      ],
+      "aboutHtml": "Converts text into programming naming styles: camelCase, PascalCase, snake_case, kebab-case and Capitalized Case.",
+      "goodForHtml": [
+        "Naming variables, functions and classes consistently",
+        "Creating URL slugs and file names (kebab-case)",
+        "Converting database column names (snake_case) to JavaScript properties (camelCase)"
+      ],
+      "tipHtml": "Follow the convention of the language you are writing: camelCase for JavaScript variables, PascalCase for classes and React components, snake_case for Python and most SQL columns."
+    },
+    {
+      "slug": "yaml-validator",
+      "name": "YAML Validator",
+      "title": "YAML Validator – Check YAML Syntax Online | My Toolbox",
+      "description": "Validate YAML syntax online for Kubernetes manifests, Docker Compose files and CI/CD pipelines. See the error and its location instantly. Free.",
+      "h1": "YAML Validator",
+      "lead": "Check YAML files for syntax errors before they break a deployment, from Kubernetes manifests to GitHub Actions workflows.",
+      "steps": [
+        "Paste your YAML into the editor.",
+        "Click Validate YAML.",
+        "If there is an error, the message shows what is wrong and where; fix it and validate again."
+      ],
+      "faqs": [
+        {
+          "q": "Why is my YAML invalid?",
+          "aHtml": "The most common causes are tab characters used for indentation, inconsistent spaces, and a missing space after a colon."
+        },
+        {
+          "q": "Can I validate Kubernetes or Docker Compose files?",
+          "aHtml": "Yes. They are plain YAML, so the validator checks their syntax. It does not check them against the Kubernetes or Compose schema."
+        },
+        {
+          "q": "Is my file uploaded?",
+          "aHtml": "No. Validation runs in your browser."
+        }
+      ],
+      "aboutHtml": "Checks YAML files for syntax errors, which is useful for configuration files such as Kubernetes manifests, Docker Compose files and CI pipelines.",
+      "goodForHtml": [
+        "Catching an indentation error before a deployment fails",
+        "Checking a CI/CD pipeline file",
+        "Validating Docker Compose or Kubernetes manifests"
+      ],
+      "tipHtml": "YAML does not allow tab characters for indentation, and a single misaligned space changes the structure. Validate before committing config changes."
+    }
+  ]
+}
