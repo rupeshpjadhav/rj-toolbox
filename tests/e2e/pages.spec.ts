@@ -88,3 +88,22 @@ test('@live every page includes the AdSense Auto ads script', async ({ page }) =
     await expect(page.locator('script[src*="adsbygoogle.js?client=ca-pub-1981273968189802"]')).toHaveCount(1);
   }
 });
+
+test('@live styles come from the build, not the Tailwind CDN', async ({ page }) => {
+  const cdnRequests: string[] = [];
+  page.on('request', r => { if (r.url().includes('cdn.tailwindcss.com')) cdnRequests.push(r.url()); });
+  await page.goto('/');
+  await expect(page.locator('h1').first()).toBeVisible();
+  // index.html sets body to bg-slate-900 (Tailwind); this only holds if the compiled CSS loaded.
+  const bg = await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor);
+  // Tailwind v4 writes colours as oklch(); 0.208 is slate-900.
+  expect(bg).toMatch(/^oklch\(0\.208/);
+  expect(cdnRequests).toEqual([]);
+});
+
+test('@live footers name the tech stack', async ({ page }) => {
+  for (const path of ['/', '/guides/', '/about/']) {
+    await page.goto(path);
+    await expect(page.getByText('Built with React, TypeScript, Vite and Tailwind CSS.')).toBeVisible();
+  }
+});
