@@ -233,3 +233,13 @@ test.describe('navigation between tools', () => {
     await expect(page.locator('h2').first()).toHaveText('YAML Validator');
   });
 });
+
+test('the Test Data Generator name is shown in capitals on the homepage', async ({ page }) => {
+  await page.goto('/');
+  const tab = page.locator('nav[aria-label="Tools"] a[href="/test-data-generator/"] span');
+  const heading = page.locator('h2', { hasText: 'Test Data Generator' }).first();
+  await expect(tab).toHaveText('Test Data Generator');
+  await expect(heading).toHaveText('Test Data Generator');
+  expect(await tab.evaluate(el => getComputedStyle(el).textTransform)).toBe('uppercase');
+  expect(await heading.evaluate(el => getComputedStyle(el).textTransform)).toBe('uppercase');
+});
