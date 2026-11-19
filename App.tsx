@@ -51,9 +51,6 @@ const toolFromPath = (pathname: string) => {
   return tools.find(t => t.slug === slug) ?? tools[0];
 };
 
-// Tools whose name is shown in capitals in the tool menu and on their card.
-const UPPERCASE_TOOLS = ['test-data-generator'];
-
 const App: React.FC = () => {
   const activeTool = toolFromPath(typeof window === 'undefined' ? '/' : window.location.pathname);
 
@@ -79,7 +76,7 @@ const App: React.FC = () => {
                 }`}
               >
                 {tool.icon}
-                <span className={UPPERCASE_TOOLS.includes(tool.slug) ? 'uppercase' : undefined}>{tool.name}</span>
+                <span className="uppercase">{tool.name}</span>
               </a>
             );
           })}
