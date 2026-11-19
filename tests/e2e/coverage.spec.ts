@@ -234,12 +234,15 @@ test.describe('navigation between tools', () => {
   });
 });
 
-test('the Test Data Generator name is shown in capitals on the homepage', async ({ page }) => {
+test('every tool name is shown in capitals in the menu and on its card', async ({ page }) => {
   await page.goto('/');
-  const tab = page.locator('nav[aria-label="Tools"] a[href="/test-data-generator/"] span');
-  const heading = page.locator('h2', { hasText: 'Test Data Generator' }).first();
-  await expect(tab).toHaveText('Test Data Generator');
-  await expect(heading).toHaveText('Test Data Generator');
-  expect(await tab.evaluate(el => getComputedStyle(el).textTransform)).toBe('uppercase');
+  const tabs = page.locator('nav[aria-label="Tools"] a span');
+  await expect(tabs).toHaveCount(10);
+  for (const tab of await tabs.all()) {
+    expect(await tab.evaluate(el => getComputedStyle(el).textTransform)).toBe('uppercase');
+  }
+  await page.goto('/yaml-validator/');
+  const heading = page.locator('h2').first();
+  await expect(heading).toHaveText('YAML Validator');
   expect(await heading.evaluate(el => getComputedStyle(el).textTransform)).toBe('uppercase');
 });

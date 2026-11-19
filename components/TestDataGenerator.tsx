@@ -220,7 +220,7 @@ const TestDataGenerator: React.FC = () => {
   };
   
   return (
-    <ToolCard titleClassName="uppercase" title="Test Data Generator" description="Define your data structure, and generate realistic test data as JSON, CSV, XML, HTML, SQL, Python or JavaScript.">
+    <ToolCard title="Test Data Generator" description="Define your data structure, and generate realistic test data as JSON, CSV, XML, HTML, SQL, Python or JavaScript.">
       {/* Configuration */}
       <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-700 mb-6">
         <h3 className="font-semibold text-lg text-white mb-4">Configuration</h3>
